@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <section class="mx-3">
+        <h2 class="text-center">Todo App</h2>
+            <div class="mb-3">
+                <label for="" class="form-label">Todo</label>
+                <input type="text" class="form-control mb-2" id="todo">
+                <button class="btn btn-primary" onclick="submitData()">Submit</button>
+            </div>
+
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">No</th>
+                            <th class="text-center">Todo</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="body-table">
+                    </tbody>
+                </table>
+            </div>
+    </section>
+
+    <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Todo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="text-todo">
+                    Todo : sadasd
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteTodo()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+    <script>
+        var datas = []
+        viewData()
+
+        function submitData(){
+            let dataTodo = document.getElementById('todo')
+
+            datas.push(dataTodo.value)
+
+            localStorage.setItem('dataTodos', JSON.stringify(datas))
+
+            dataTodo.value = ""
+
+            viewData()
+        }
+
+        function viewData(){
+            datas = JSON.parse(localStorage.getItem('dataTodos')) || []
+            let bodyTable = document.getElementById('body-table')
+
+            let code = "";
+
+            let i = 1;
+            if(datas.length > 0){
+                datas.forEach((value, index) => {
+                    code += `
+                        <tr>
+                            <td class="text-center">${i++}</td>
+                            <td class="text-center">
+                                ${value}
+                            </td>
+                            <td>
+                                <center>
+                                    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-modal" onclick="changeBodyModal(${index})">Delete</button>
+                                </center>
+                            </td>
+                        </tr>
+                    `
+                });
+            }
+            bodyTable.innerHTML=code
+        }
+
+
+        var indexDelete = 0;
+        function changeBodyModal(index){
+            // console.log(index);
+            let data = datas[index]
+            indexDelete = index
+            document.getElementById('text-todo').innerText=data
+        }
+
+        function deleteTodo(){
+            datas.splice(indexDelete, 1)
+
+            localStorage.setItem('dataTodos', JSON.stringify(datas))
+            viewData()
+        }
+    </script>
+</body>
+</html>
