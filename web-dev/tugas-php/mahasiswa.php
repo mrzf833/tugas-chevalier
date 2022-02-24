@@ -5,7 +5,7 @@ require "./Conn.php";
 require "./mahasiswa/MahasiswaService.php";
 use mahasiswa\MahasiswaService;
 
-    $status = $_SESSION['status'];
+    $status = $_SESSION['status'] ?? null;
     if(!(isset($status) && $status == 'login')){
         header('location:login.php');
     }

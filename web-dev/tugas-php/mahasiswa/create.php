@@ -1,3 +1,11 @@
+<?php
+    session_start();
+
+    $status = $_SESSION['status'] ?? null;
+    if(!(isset($status) && $status == 'login')){
+        header('location:login.php');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
