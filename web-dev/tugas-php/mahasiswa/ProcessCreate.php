@@ -6,7 +6,7 @@ use mahasiswa\MahasiswaService;
 
 $status = $_SESSION['status'] ?? null;
 if(!(isset($status) && $status == 'login')){
-    header('location:login.php');
+    header('location:../login.php');
 }
 
 $datas = [

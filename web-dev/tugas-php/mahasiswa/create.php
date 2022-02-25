@@ -3,7 +3,7 @@
 
     $status = $_SESSION['status'] ?? null;
     if(!(isset($status) && $status == 'login')){
-        header('location:login.php');
+        header('location:../login.php');
     }
 ?>
 <!DOCTYPE html>
@@ -25,7 +25,7 @@
                     <i class="fa-solid fa-user text-white"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile-dropdown">
-                    <li><a class="dropdown-item" href="./logout.php">Logout</a></li>
+                    <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
                 </ul>
             </div>
         </div>
